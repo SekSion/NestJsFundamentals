@@ -8,7 +8,7 @@ import { Roles } from 'src/decorators/role.decorator';
 import { Role } from 'src/enums/role.enum';
 import { RoleGuard } from 'src/guards/role.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
-@Roles(Role.Admin)
+@Roles(Role.Admin, Role.User)
 @UseGuards(AuthGuard, RoleGuard)
 @Controller('users')
 export class UserController {
