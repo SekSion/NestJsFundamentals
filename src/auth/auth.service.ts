@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
-import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer';
-import { UserEntity } from 'src/user/entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserEntity } from '../user/entity/user.entity';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -107,7 +107,7 @@ export class AuthService {
       },
     });
 
-    return true;
+    return { success: true };
   }
   async reset(password: string, token: string) {
     try {
@@ -141,6 +141,8 @@ export class AuthService {
   }
 
   async register(data: AuthRegisterDTO) {
+    delete data.role;
+
     const user = await this.userService.create(data);
 
     return this.createToken(user);

@@ -17,7 +17,7 @@ export class UserService {
   async create(data: CreateUserDTO) {
     try {
       if (
-        await this.userRepository.exists({
+        await this.userRepository.exist({
           where: {
             email: data.email,
           },
@@ -100,13 +100,16 @@ export class UserService {
   async delete(id: number) {
     await this.exists(id);
 
-    return this.userRepository.delete(id);
+    await this.userRepository.delete(id);
+    return true;
   }
 
   async exists(id: number) {
     if (
-      !(await this.userRepository.existsBy({
-        id,
+      !(await this.userRepository.exist({
+        where: {
+          id,
+        },
       }))
     ) {
       throw new NotFoundException('User Not Found for edit.');
