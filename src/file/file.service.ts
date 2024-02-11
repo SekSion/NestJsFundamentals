@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { writeFile } from 'fs/promises';
-import { join } from 'path';
 
 @Injectable()
 export class FileService {
